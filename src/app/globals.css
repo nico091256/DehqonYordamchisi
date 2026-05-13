@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #2D5A27;
+  --primary-light: #4A8B3F;
+  --primary-dark: #1E3D1A;
+  --secondary: #E67E22;
+  --accent: #F1C40F;
+  --surface: #FFFFFF;
+  --background: #F9FBFA;
+  --border: rgba(45, 90, 39, 0.08);
+  --shadow-soft: 0 10px 30px -5px rgba(45, 90, 39, 0.05);
+  --shadow-strong: 0 20px 40px -10px rgba(45, 90, 39, 0.15);
+}
+
+@layer utilities {
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  .shadow-strong {
+    box-shadow: var(--shadow-strong);
+  }
+}
+
+body {
+  font-family: var(--font-inter), sans-serif;
+  @apply bg-[#F9FBFA] text-gray-900 selection:bg-[#2D5A27] selection:text-white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-outfit), sans-serif;
+}
+
+/* Premium Utilities */
+.glass {
+  @apply bg-white/70 backdrop-blur-xl border border-white/20;
+}
+
+.glass-dark {
+  @apply bg-black/40 backdrop-blur-xl border border-white/10;
+}
+
+.btn-primary {
+  @apply bg-[#2D5A27] text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all hover:bg-[#1E3D1A] hover:shadow-xl hover:shadow-[#2D5A27]/20 active:scale-95 disabled:opacity-50;
+}
+
+.btn-secondary {
+  @apply bg-[#E67E22] text-white px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all hover:bg-[#d35400] hover:shadow-xl hover:shadow-[#E67E22]/20 active:scale-95 disabled:opacity-50;
+}
+
+.input-field {
+  @apply w-full py-4 px-6 rounded-2xl border-2 border-gray-100 bg-white/50 focus:bg-white focus:border-[#2D5A27] focus:ring-4 focus:ring-[#2D5A27]/5 outline-none transition-all font-semibold text-sm;
+}
+
+.card-premium {
+  @apply bg-white rounded-[2.5rem] border border-gray-100 shadow-soft hover:shadow-strong transition-all duration-500;
+}
+
+.nav-link {
+  @apply text-xs font-black uppercase tracking-widest text-gray-400 hover:text-[#2D5A27] transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-[#2D5A27] after:transition-all hover:after:w-full;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 rounded-full hover:bg-gray-300 transition-colors;
+}
+
