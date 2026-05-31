@@ -131,7 +131,7 @@ export default function CartPage() {
                   >
                     <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl overflow-hidden flex-shrink-0 bg-gray-50">
                       <img 
-                        src={item.image || `https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=400&auto=format&fit=crop`} 
+                        src={item.image || `/products/olma.svg`} 
                         alt={item.title} 
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />

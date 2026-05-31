@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+
 import { User, LogOut, Settings, LayoutDashboard, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
@@ -43,38 +43,33 @@ export default function UserMenu() {
         <ChevronDown size={16} className={`text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className="absolute top-full right-0 mt-3 w-64 bg-white rounded-3xl shadow-2xl shadow-gray-200 border border-gray-100 overflow-hidden py-2"
-          >
-            <div className="px-6 py-4 border-b border-gray-50 mb-2">
-              <p className="text-sm font-black text-gray-900">{user.name}</p>
-              <p className="text-xs text-gray-400 font-medium">{user.phone || 'Telefon raqam yo\'q'}</p>
-            </div>
+      {isOpen && (
+        <div 
+          className="absolute top-full right-0 mt-3 w-64 bg-white rounded-3xl shadow-2xl shadow-gray-200 border border-gray-100 overflow-hidden py-2 z-50 transform-gpu transition-all"
+        >
+          <div className="px-6 py-4 border-b border-gray-50 mb-2">
+            <p className="text-sm font-black text-gray-900">{user.name}</p>
+            <p className="text-xs text-gray-400 font-medium">{user.phone || 'Telefon raqam yo\'q'}</p>
+          </div>
 
-            <MenuLink href="/dashboard" icon={<LayoutDashboard size={18} />} label="Boshqaruv paneli" />
-            <MenuLink href="/dashboard" icon={<User size={18} />} label="Profil sozlamalari" />
-            <MenuLink href="/dashboard/settings" icon={<Settings size={18} />} label="Xavfsizlik" />
-            
-            <div className="mt-2 pt-2 border-t border-gray-50">
-              <button 
-                onClick={() => {
-                  logout();
-                  setIsOpen(false);
-                  router.push('/');
-                }}
-                className="w-full flex items-center gap-3 px-6 py-3 text-red-500 hover:bg-red-50 transition-colors font-bold text-sm"
-              >
-                <LogOut size={18} /> Chiqish
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          <MenuLink href="/dashboard" icon={<LayoutDashboard size={18} />} label="Boshqaruv paneli" />
+          <MenuLink href="/dashboard" icon={<User size={18} />} label="Profil sozlamalari" />
+          <MenuLink href="/dashboard/settings" icon={<Settings size={18} />} label="Xavfsizlik" />
+          
+          <div className="mt-2 pt-2 border-t border-gray-50">
+            <button 
+              onClick={() => {
+                logout();
+                setIsOpen(false);
+                router.push('/');
+              }}
+              className="w-full flex items-center gap-3 px-6 py-3 text-red-500 hover:bg-red-50 transition-colors font-bold text-sm"
+            >
+              <LogOut size={18} /> Chiqish
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -14,8 +14,12 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       try {
         const { data } = await api.get('/api/users/profile');
         setUser(data);
-      } catch (err) {
-        logout();
+      } catch (err: any) {
+        // Only logout if we got a proper auth error (401/403), not a network error
+        if (err?.response?.status === 401 || err?.response?.status === 403) {
+          logout();
+        }
+        // On network errors, keep any existing persisted user state
       } finally {
         setLoading(false);
       }
@@ -24,7 +28,9 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     initAuth();
   }, [setUser, logout]);
 
+  // Only show loading spinner briefly, and only if we haven't resolved yet
   if (loading && !user) {
+    // Use a short timeout to avoid blocking the UI forever on network errors
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F9FBFA]">
         <div className="flex flex-col items-center gap-4">

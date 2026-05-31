@@ -196,18 +196,18 @@ export default function DashboardPage() {
         <div className="space-y-6">
           {/* Agronomic Weather Insight */}
           <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-[2rem] p-8 text-white relative overflow-hidden shadow-lg shadow-blue-500/20">
-            <div className="absolute -right-4 -top-4 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
+            <div className="absolute -right-4 -top-4 w-32 h-32 bg-[radial-gradient(circle,rgba(255,255,255,0.1),transparent_70%)] rounded-full" />
             <div className="relative z-10">
               <div className="flex justify-between items-start mb-6">
                 <div>
                   <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-100 mb-1">Mintaqa: Toshkent</h3>
                   <div className="text-4xl font-black">+24°C</div>
                 </div>
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center transform-gpu">
                   <CloudRain size={24} />
                 </div>
               </div>
-              <div className="bg-black/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+              <div className="bg-black/10 backdrop-blur-sm rounded-xl p-4 border border-white/10 transform-gpu">
                 <p className="text-xs font-medium leading-relaxed">
                   <span className="font-bold text-blue-100">AI Tahlil:</span> Bugun ekinlarni sug'orish uchun qulay ob-havo. Harorat o'rtacha saqlanadi.
                 </p>
@@ -239,7 +239,7 @@ export default function DashboardPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-gray-900/20 backdrop-blur-sm"
+            className="absolute inset-0 bg-gray-900/20 backdrop-blur-sm transform-gpu"
             onClick={() => setIsAiModalOpen(false)}
           />
           <motion.div 

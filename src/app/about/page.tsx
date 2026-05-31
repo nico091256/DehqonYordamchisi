@@ -10,7 +10,7 @@ export default function AboutPage() {
 
       {/* Hero Section */}
       <section className="pt-48 pb-24 bg-[#F9FBFA] relative overflow-hidden">
-        <div className="absolute top-0 right-0 -z-10 w-1/2 h-full bg-[#2D5A27]/5 blur-3xl rounded-full" />
+        <div className="absolute top-0 right-0 -z-10 w-1/2 h-full bg-[radial-gradient(circle_at_top_right,rgba(45,90,39,0.05),transparent_70%)] rounded-full" />
         <div className="container mx-auto px-4 text-center">
           <span className="text-[#2D5A27] font-black uppercase tracking-widest text-xs mb-4 block">Biz haqimizda</span>
           <h1 className="text-5xl lg:text-7xl font-black text-gray-900 mb-8 leading-tight">
@@ -29,7 +29,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="relative aspect-square rounded-[4rem] overflow-hidden shadow-2xl shadow-gray-200">
               <img 
-                src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=800&auto=format&fit=crop" 
+                src="/products/olma.svg"
                 alt="Agriculture work"
                 className="w-full h-full object-cover"
               />
