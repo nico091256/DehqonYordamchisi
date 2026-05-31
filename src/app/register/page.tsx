@@ -40,7 +40,12 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       const response = await api.post('/api/auth/register', data);
-      setUser(response.data.user);
+      const { token, user } = response.data;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('token', token);
+        document.cookie = `token=${token}; path=/; max-age=86400; SameSite=Lax`;
+      }
+      setUser(user);
       toast.success('Ro\'yxatdan muvaffaqiyatli o\'tdingiz!');
       router.push('/');
     } catch (err: any) {

@@ -18,12 +18,63 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/shared/api/api";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { cn } from "@/shared/lib/utils";
+
+interface ChatMessage {
+  role: 'user' | 'model';
+  content: string;
+}
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
   const isFarmer = user?.role === 'FARMER';
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
+    { role: 'model', content: "Salom! Bugun sizga qanday yordam bera olaman? Ekinlar, bozor narxlari yoki platforma bo'yicha savollaringiz bormi?" }
+  ]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chatMessages, isAiLoading]);
+
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputMessage.trim() || isAiLoading) return;
+
+    const userMsgText = inputMessage.trim();
+    const newUserMessage: ChatMessage = { role: 'user', content: userMsgText };
+    const updatedMessages = [...chatMessages, newUserMessage];
+
+    setChatMessages(updatedMessages);
+    setInputMessage('');
+    setIsAiLoading(true);
+
+    try {
+      const { data } = await api.post('/api/ai/chat', {
+        messages: updatedMessages.map(msg => ({
+          role: msg.role,
+          content: msg.content
+        }))
+      });
+
+      setChatMessages(prev => [...prev, { role: 'model', content: data.response }]);
+    } catch (error) {
+      console.error("AI error:", error);
+      setChatMessages(prev => [...prev, { 
+        role: 'model', 
+        content: "Kechirasiz, xizmatda xatolik yuz berdi. Iltimos, qayta urinib ko'ring." 
+      }]);
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
 
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ['dashboard-stats', user?.role],
@@ -204,23 +255,50 @@ export default function DashboardPage() {
               </h2>
               <p className="text-xs text-gray-500 mt-1">Sizning shaxsiy raqamli yordamchingiz</p>
             </div>
-            <div className="flex-1 overflow-y-auto p-6 bg-[#F9FBFA]">
-              <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm text-sm text-gray-600 rounded-tl-none">
-                Salom! Bugun sizga qanday yordam bera olaman? Ekinlar, bozor narxlari yoki platforma bo'yicha savollaringiz bormi?
-              </div>
+            
+            <div className="flex-1 overflow-y-auto p-6 bg-[#F9FBFA] space-y-4 flex flex-col">
+              {chatMessages.map((msg, index) => (
+                <div 
+                  key={index}
+                  className={cn(
+                    "max-w-[85%] p-4 rounded-2xl text-sm shadow-sm leading-relaxed transition-all",
+                    msg.role === 'model' 
+                      ? "bg-white border border-gray-100 text-gray-800 self-start rounded-tl-none" 
+                      : "bg-purple-600 text-white self-end rounded-tr-none"
+                  )}
+                >
+                  {msg.content}
+                </div>
+              ))}
+
+              {isAiLoading && (
+                <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm text-sm text-gray-500 self-start rounded-tl-none flex items-center gap-2">
+                  <Loader2 className="animate-spin text-purple-600 animate-duration-1000" size={16} />
+                  <span>Dehqon AI javob yozmoqda...</span>
+                </div>
+              )}
+              <div ref={chatEndRef} />
             </div>
-            <div className="p-4 border-t border-gray-100 bg-white">
+
+            <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-100 bg-white">
               <div className="relative">
                 <input 
                   type="text" 
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  disabled={isAiLoading}
                   placeholder="Xabar yozing..." 
-                  className="w-full h-12 bg-gray-50 border-none rounded-xl pl-4 pr-12 text-sm focus:ring-2 focus:ring-purple-500/20 outline-none"
+                  className="w-full h-12 bg-gray-50 border-none rounded-xl pl-4 pr-12 text-sm focus:ring-2 focus:ring-purple-500/20 outline-none disabled:opacity-50"
                 />
-                <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-purple-500 text-white rounded-lg flex items-center justify-center hover:bg-purple-600 transition-colors">
+                <button 
+                  type="submit"
+                  disabled={isAiLoading || !inputMessage.trim()}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-purple-500 text-white rounded-lg flex items-center justify-center hover:bg-purple-600 transition-colors disabled:opacity-50"
+                >
                   <ArrowUpRight size={16} />
                 </button>
               </div>
-            </div>
+            </form>
           </motion.div>
         </div>
       )}

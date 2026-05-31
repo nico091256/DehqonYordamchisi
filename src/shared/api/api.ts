@@ -8,4 +8,17 @@ const api = axios.create({
   },
 });
 
+api.interceptors.request.use((config) => {
+  if (typeof window !== 'undefined') {
+    const match = document.cookie.match(new RegExp('(^| )token=([^;]+)'));
+    const token = match ? match[2] : localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
 export default api;
