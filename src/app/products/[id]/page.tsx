@@ -5,33 +5,14 @@ import ProductActions from "@/entities/product/ui/ProductActions";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/products`;
+import { mockProducts } from "@/app/api/mockData";
 
 async function getProduct(id: string) {
-  try {
-    const res = await fetch(`${API_URL}/${id}`, {
-      next: { revalidate: 60 }
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data; // The API returns the product directly based on controller
-  } catch (err) {
-    console.error("Product detail fetch error:", err);
-    return null;
-  }
+  return mockProducts.find(p => p.id === id) || null;
 }
 
 async function getRelatedProducts(category: string, excludeId: string) {
-  try {
-    const res = await fetch(`${API_URL}?category=${category}&limit=5`, {
-      next: { revalidate: 60 }
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.products.filter((p: any) => p.id !== excludeId).slice(0, 4);
-  } catch (err) {
-    return [];
-  }
+  return mockProducts.filter(p => p.category === category && p.id !== excludeId).slice(0, 4);
 }
 
 import Image from "next/image";
@@ -65,13 +46,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           {/* Left: Image (Sticky on Desktop) */}
           <div className="lg:sticky lg:top-32 rounded-[4rem] overflow-hidden bg-white aspect-square relative shadow-[0_50px_100px_-20px_rgba(45,90,39,0.1)] border-[12px] border-white group">
             <Image 
-              src={product.image || `https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=800&auto=format&fit=crop`} 
+              src={product.image || `/products/olma.svg`} 
               alt={product.title}
               fill
               className="object-cover group-hover:scale-110 transition-transform duration-[2s]"
             />
             <div className="absolute top-8 left-8 flex flex-col gap-3">
-              <div className="bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-[#2D5A27] shadow-xl border border-white/20">
+              <div className="bg-white/90 px-5 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-[#2D5A27] shadow-xl border border-gray-100 transform-gpu">
                 Premium Sifat
               </div>
             </div>

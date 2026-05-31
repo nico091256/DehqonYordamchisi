@@ -72,14 +72,14 @@ export default function FarmersPage() {
                   region={farmer.region} 
                   products={farmer._count.products} 
                   rating={5.0} 
-                  image={farmer.image || "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=400&auto=format&fit=crop"}
+                  image={farmer.image || "/farmers/default.svg"}
                 />
               ))}
             </div>
           )}
 
           <div className="mt-32 p-12 lg:p-20 rounded-[4rem] bg-[#2D5A27] text-white text-center relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 blur-[100px] rounded-full -mr-48 -mt-48" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle,rgba(255,255,255,0.05),transparent_70%)] rounded-full -mr-48 -mt-48" />
             <h2 className="text-3xl lg:text-5xl font-black mb-8 relative z-10">Siz ham dehqonmisiz?</h2>
             <p className="max-w-2xl mx-auto text-white/70 font-medium text-lg mb-12 relative z-10 leading-relaxed">
               O'z mahsulotlaringizni butun O'zbekistonga taniting va xaridorlarni oson toping. 
@@ -117,7 +117,7 @@ function FarmerCard({ id, name, region, products, rating, image }: any) {
     >
       <div className="relative h-72 overflow-hidden bg-gray-100">
         <img src={image} alt={name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
-        <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest shadow-sm">
+        <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl flex items-center gap-2 text-[10px] font-black uppercase tracking-widest shadow-sm transform-gpu">
           <Star size={14} className="text-[#F1C40F] fill-[#F1C40F]" /> {rating} Reyting
         </div>
       </div>

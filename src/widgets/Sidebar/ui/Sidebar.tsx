@@ -58,7 +58,7 @@ export default function DashboardSidebar({ isOpen, onClose, mode = 'sidebar' }: 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-[60] lg:hidden"
+            className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-[60] lg:hidden transform-gpu"
             onClick={onClose}
           />
         )}

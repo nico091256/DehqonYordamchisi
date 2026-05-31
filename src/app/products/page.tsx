@@ -3,26 +3,26 @@ import ProductCard from "@/entities/product/ui/ProductCard";
 import ProductFilters from "@/features/product-filters/ui/ProductFilters";
 import { Sparkles } from "lucide-react";
 
-async function getProducts(searchParams: { [key: string]: string | string[] | undefined }) {
-  const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-  const url = new URL(`${apiBase}/api/products`);
-  
-  if (searchParams.search) url.searchParams.set('search', String(searchParams.search));
-  if (searchParams.category) url.searchParams.set('category', String(searchParams.category));
-  if (searchParams.region) url.searchParams.set('region', String(searchParams.region));
-  url.searchParams.set('limit', '20');
+import { mockProducts } from "@/app/api/mockData";
 
-  try {
-    const res = await fetch(url.toString(), {
-      next: { revalidate: 60 }
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.products;
-  } catch (err) {
-    console.error("Products fetch error:", err);
-    return [];
+async function getProducts(searchParams: { [key: string]: string | string[] | undefined }) {
+  let filtered = [...mockProducts];
+
+  if (searchParams.search) {
+    const search = String(searchParams.search).toLowerCase();
+    filtered = filtered.filter(p => 
+      p.title.toLowerCase().includes(search) || 
+      p.region.toLowerCase().includes(search)
+    );
   }
+  if (searchParams.category) {
+    filtered = filtered.filter(p => p.category === String(searchParams.category));
+  }
+  if (searchParams.region) {
+    filtered = filtered.filter(p => p.region === String(searchParams.region));
+  }
+
+  return filtered.slice(0, 20);
 }
 
 export default async function ProductsPage({

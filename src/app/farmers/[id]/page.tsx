@@ -61,7 +61,7 @@ export default function FarmerProfilePage() {
               className="w-48 h-48 lg:w-64 lg:h-64 rounded-[3rem] overflow-hidden bg-gray-50 border-8 border-gray-50 shadow-2xl"
             >
               <img 
-                src={farmer.image || "https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=400&auto=format&fit=crop"} 
+                src={farmer.image || "/farmers/default.svg"}
                 alt={farmer.name} 
                 className="w-full h-full object-cover"
               />

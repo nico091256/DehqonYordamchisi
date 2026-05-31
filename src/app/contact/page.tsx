@@ -60,7 +60,7 @@ export default function ContactPage() {
               />
               
               <div className="p-8 rounded-[2.5rem] bg-[#2D5A27] text-white overflow-hidden relative">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-2xl rounded-full -mr-16 -mt-16" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[radial-gradient(circle,rgba(255,255,255,0.1),transparent_70%)] rounded-full -mr-16 -mt-16" />
                 <h4 className="text-xl font-black mb-4">Ijtimoiy tarmoqlar</h4>
                 <div className="flex gap-4">
                   <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all cursor-pointer">

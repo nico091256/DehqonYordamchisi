@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 };
 
 import Navbar from "@/widgets/Navbar/ui/Navbar";
+import BottomNav from "@/widgets/Navbar/ui/BottomNav";
 import AuthProvider from "@/providers/AuthProvider";
 
 export default function RootLayout({
@@ -29,11 +30,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="uz">
-      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-[#F9FBFA] text-[#1A1A1A]`}>
+      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-[#F9FBFA] text-[#1A1A1A] pb-16 lg:pb-0`}>
         <QueryProvider>
           <AuthProvider>
             <Navbar />
             {children}
+            <BottomNav />
+            <Toaster position="top-center" />
           </AuthProvider>
         </QueryProvider>
       </body>

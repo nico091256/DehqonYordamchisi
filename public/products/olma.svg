@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#FEF2F2" rx="20"/>
+  <text x="200" y="180" text-anchor="middle" font-size="120">🍎</text>
+  <text x="200" y="260" text-anchor="middle" font-size="24" fill="#991B1B" font-weight="bold" font-family="sans-serif">Qizil Olma</text>
+</svg>

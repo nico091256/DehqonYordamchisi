@@ -14,7 +14,7 @@ export default function DashboardTopbar({ onMenuClick }: DashboardTopbarProps) {
   const { user } = useAuthStore();
 
   return (
-    <header className="sticky top-0 z-40 bg-white/70 backdrop-blur-2xl border-b border-gray-100/50 flex items-center justify-between px-4 lg:px-8 h-20 shadow-sm">
+    <header className="sticky top-0 z-40 bg-white/70 backdrop-blur-md border-b border-gray-100/50 flex items-center justify-between px-4 lg:px-8 h-20 shadow-sm transform-gpu">
       <div className="flex items-center gap-4">
         <button 
           onClick={onMenuClick}
