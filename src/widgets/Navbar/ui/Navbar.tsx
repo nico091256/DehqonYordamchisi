@@ -35,6 +35,7 @@ export default function Navbar() {
   const { user } = useAuthStore();
   const pathname = usePathname();
   const fetchFavorites = useFavoritesStore((state) => state.fetchFavorites);
+  const cartItemCount = useCartStore((state) => state.getItemCount)();
 
   useEffect(() => {
     if (user) {
@@ -51,12 +52,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'Marketplace', href: '/products', icon: <ShoppingBag size={18} /> },
     { name: 'Mahsulotlar', href: '/products', icon: <Wheat size={18} /> },
     { name: 'Kategoriyalar', href: '/#categories', icon: <Sprout size={18} /> },
     { name: 'Fermerlar', href: '/farmers', icon: <Users2 size={18} /> },
     { name: 'AI Yordamchi', href: '/ai-assistant', icon: <Sparkles size={18} /> },
-    { name: 'Statistikalar', href: '/stats', icon: <BarChart3 size={18} /> },
   ];
 
   if (pathname.startsWith('/dashboard')) {
@@ -160,6 +159,19 @@ export default function Navbar() {
                 <Bell size={18} strokeWidth={2.5} />
                 <span className="absolute top-2.5 right-2.5 w-2 h-2 md:w-2.5 md:h-2.5 bg-[#E67E22] rounded-full border-2 border-white shadow-lg animate-pulse" />
               </button>
+
+              {/* Cart Button */}
+              <Link
+                href="/cart"
+                className="relative w-10 h-10 md:w-12 md:h-12 bg-white/80 backdrop-blur-xl border border-gray-100 rounded-2xl flex items-center justify-center text-gray-400 hover:text-[#2D5A27] hover:border-[#2D5A27]/20 transition-all shadow-sm"
+              >
+                <ShoppingCart size={18} strokeWidth={2.5} />
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] bg-[#E67E22] text-white text-[9px] font-black rounded-full flex items-center justify-center px-1 border-2 border-white shadow-lg">
+                    {cartItemCount > 99 ? '99+' : cartItemCount}
+                  </span>
+                )}
+              </Link>
 
               <div className="hidden md:block h-8 w-px bg-gray-100 mx-1 rounded-full" />
 

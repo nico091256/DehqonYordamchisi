@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import api from '@/shared/api/api';
 
 interface User {
   id: string;
@@ -23,8 +24,16 @@ export const useAuthStore = create<AuthState>()(
       setUser: (user) => {
         set({ user });
       },
-      logout: () => {
+      logout: async () => {
         set({ user: null });
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('token');
+        }
+        try {
+          await api.post('/api/auth/logout');
+        } catch (err) {
+          console.error('Logout error', err);
+        }
       },
     }),
     {
